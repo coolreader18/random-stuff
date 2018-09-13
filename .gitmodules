@@ -1,0 +1,3 @@
+[submodule "kahoot-hack"]
+	path = kahoot-hack
+	url = https://github.com/unixpickle/kahoot-hack
