@@ -1,4 +1,2 @@
 tasks:
-  - command: >
-    ./setup.sh
-    make
+  - command: ./setup.sh && make
