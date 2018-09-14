@@ -6,13 +6,13 @@ kahoots = $(patsubst kahoot-hack/kahoot-%,%,$(wildcard kahoot-hack/kahoot-*))
 
 all: kahoot-hack
 
-go-deps:
+.godeps:
 	go get -v -d ./...
+	touch .godeps
 
-khs = $(patsubst %,$(OUTDIR)/kahoot-%,$(kahoots))
-kahoot-hack: go-deps $(khs)
+kahoot-hack: $(patsubst %,$(OUTDIR)/kahoot-%,$(kahoots))
 
-$(OUTDIR)/kahoot-%: kahoot-hack/kahoot-%/main.go
+$(OUTDIR)/kahoot-%: kahoot-hack/kahoot-%/main.go .godeps
 	go build -o $@ $<
 
 install-go:
