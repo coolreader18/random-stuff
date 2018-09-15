@@ -20,5 +20,5 @@ update-godeps: .rm-godeps .godeps
 
 kahoot-hack: $(patsubst %,$(OUTDIR)/kahoot-%,$(kahoots))
 
-$(OUTDIR)/kahoot-%: kahoot-hack/kahoot-%/main.go .godeps
-	go build -o $@ $<
+$(OUTDIR)/kahoot-%: kahoot-hack/kahoot-%/*.go .godeps
+	go build -o $@ kahoot-hack/kahoot-$*/main.go
