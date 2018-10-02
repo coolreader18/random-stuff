@@ -9,7 +9,14 @@ if [[ -z ${R_S_ENV+x} ]]; then
     R_S_ENV=termux
   else
     echo "Can't detect environment"
+    exit 1
   fi
 fi
 
-bash .setup/$R_S_ENV
+if [[ $(find kahoot-hack -maxdepth 0 -empty -exec echo {} is empty. \;) ]]; then
+  git submodule init
+  git submodule update
+fi
+
+
+bash .setup/$R_S_ENV.sh
