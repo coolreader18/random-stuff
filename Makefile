@@ -39,7 +39,7 @@ install-%: $(OUTDIR)/%
 
 uninstall: uninstall-kahoots
 
-uninstall-*: $(OUTDIR)/%
-	rm -f $(BINDIR)/$<
-
 uninstall-kahoots: $(patsubst %,uninstall-kahoot-%,$(kahoots))
+
+uninstall-%: $(OUTDIR)/%
+	rm -f $(BINDIR)/$<
