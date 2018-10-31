@@ -3,7 +3,7 @@
 OUTDIR = build
 BINDIR = /usr/bin
 
-kahootbins = $(patsubst kahoot-hack/kahoot-%,%,$(wildcard kahoot-hack/kahoot-*))
+kahootbins = $(patsubst kahoot-hack/%,%,$(wildcard kahoot-hack/kahoot-*))
 
 export GODIR ?= ~/go
 
@@ -23,7 +23,7 @@ clean: .rm-godeps
 
 update-godeps: .rm-godeps .godeps
 
-kahootbuilds = $(addprefix $(OUTDIR)/kahoot-,$(kahootbins))
+kahootbuilds = $(addprefix $(OUTDIR)/,$(kahootbins))
 
 kahoot-hack: $(kahootbuilds)
 
@@ -36,7 +36,7 @@ allbins = $(kahootbins)
 
 install: $(addprefix install-,$(targets))
 
-install-kahoot-hack: $(addprefix install-kahoot-,$(kahootbins))
+install-kahoot-hack: $(addprefix install-,$(kahootbins))
 
 $(addprefix install-,$(allbins)): install-%: $(OUTDIR)/%
 	install -m 557 $< $(BINDIR)
@@ -45,7 +45,7 @@ $(addprefix install-,$(allbins)): install-%: $(OUTDIR)/%
 
 uninstall: $(addprefix uninstall-,$(targets))
 
-uninstall-kahoot-hack: $(addprefix uninstall-kahoot-,$(kahootbins))
+uninstall-kahoot-hack: $(addprefix uninstall-,$(kahootbins))
 
 $(addprefix uninstall-,$(allbins)): uninstall-%:
 	rm -f $(BINDIR)/$*
