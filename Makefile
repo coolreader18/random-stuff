@@ -25,7 +25,7 @@ kahootbins = $(patsubst %,$(OUTDIR)/kahoot-%,$(kahoots))
 
 kahoot-hack: $(kahootbins)
 
-$(kahootbins): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go) .godeps
+$(filter $(OUTDIR)/%,$(kahootbins)): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go) .godeps
 	go build -o $@ kahoot-hack/$*/main.go
 
 allbins = $(kahootbins)
