@@ -21,11 +21,11 @@ clean: .rm-godeps
 
 update-godeps: .rm-godeps .godeps
 
-kahootbins = $(patsubst %,$(OUTDIR)/kahoot-%,$(kahoots))
+kahootbins = $(addprefix $(OUTDIR)/kahoot-,$(kahoots))
 
 kahoot-hack: $(kahootbins)
 
-$(filter $(OUTDIR)/%,$(kahootbins)): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go) .godeps
+$(kahootbins): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go) .godeps
 	go build -o $@ kahoot-hack/$*/main.go
 
 allbins = $(kahootbins)
@@ -34,16 +34,16 @@ allbins = $(kahootbins)
 
 install: install-kahoots
 
-install-kahoots: $(patsubst %,install-kahoot-%,$(kahoots))
+install-kahoots: $(addprefix install-kahoot-,$(kahoots))
 
-install-$(allbins): install-%: $(OUTDIR)/%
+$(addprefix install-,$(allbins)): install-%: $(OUTDIR)/%
 	install -m 557 $< $(BINDIR)
 
 .PHONY: uninstall uninstall-*
 
 uninstall: uninstall-kahoots
 
-uninstall-kahoots: $(patsubst %,uninstall-kahoot-%,$(kahoots))
+uninstall-kahoots: $(addprefix uninstall-kahoot-,$(kahoots))
 
-uninstall-$(allbins): uninstall-%:
+$(addprefix uninstall-$(allbins)): uninstall-%:
 	rm -f $(BINDIR)/$*
