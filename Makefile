@@ -1,10 +1,11 @@
 .PHONY: kahoot-hack .rm-godeps
 
 OUTDIR = build
+BINDIR = /usr/bin
 
 kahoots = $(patsubst kahoot-hack/kahoot-%,%,$(wildcard kahoot-hack/kahoot-*))
 
-export GODIR ?= "~/go"
+export GODIR ?= ~/go
 
 all: kahoot-hack
 
@@ -24,3 +25,21 @@ kahoot-hack: $(patsubst %,$(OUTDIR)/kahoot-%,$(kahoots))
 
 $(OUTDIR)/kahoot-%: kahoot-hack/kahoot-%/*.go .godeps
 	go build -o $@ kahoot-hack/kahoot-$*/main.go
+
+.PHONY: install install-*
+
+install: install-kahoots
+
+install-kahoots: $(patsubst %,install-kahoot-%,$(kahoots))
+
+install-%: $(OUTDIR)/%
+	install -m 557 $< $(BINDIR)
+
+.PHONY: uninstall uninstall-*
+
+uninstall: uninstall-kahoots
+
+uninstall-kahoots: $(patsubst %,uninstall-kahoot-%,$(kahoots))
+
+uninstall-*: $(OUTDIR)/%
+	rm -f $(BINDIR)/$<
