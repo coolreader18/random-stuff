@@ -23,7 +23,7 @@ clean: .rm-godeps
 
 update-godeps: .rm-godeps .godeps
 
-kahootbuilds = $(addprefix $(OUTDIR)/kahoot-,$(kahoots))
+kahootbuilds = $(addprefix $(OUTDIR)/kahoot-,$(kahootbins))
 
 kahoot-hack: $(kahootbuilds)
 
@@ -36,7 +36,7 @@ allbins = $(kahootbins)
 
 install: $(addprefix install-,$(targets))
 
-install-kahoot-hack: $(addprefix install-kahoot-,$(kahoots))
+install-kahoot-hack: $(addprefix install-kahoot-,$(kahootbins))
 
 $(addprefix install-,$(allbins)): install-%: $(OUTDIR)/%
 	install -m 557 $< $(BINDIR)
@@ -45,7 +45,7 @@ $(addprefix install-,$(allbins)): install-%: $(OUTDIR)/%
 
 uninstall: $(addprefix uninstall-,$(targets))
 
-uninstall-kahoot-hack: $(addprefix uninstall-kahoot-,$(kahoots))
+uninstall-kahoot-hack: $(addprefix uninstall-kahoot-,$(kahootbins))
 
 $(addprefix uninstall-,$(allbins)): uninstall-%:
 	rm -f $(BINDIR)/$*
