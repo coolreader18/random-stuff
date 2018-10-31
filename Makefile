@@ -4,6 +4,8 @@ OUTDIR = build
 
 kahoots = $(patsubst kahoot-hack/kahoot-%,%,$(wildcard kahoot-hack/kahoot-*))
 
+export GODIR ?= "~/go"
+
 all: kahoot-hack
 
 clean: .rm-godeps
