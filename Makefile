@@ -45,5 +45,5 @@ uninstall: uninstall-kahoots
 
 uninstall-kahoots: $(addprefix uninstall-kahoot-,$(kahoots))
 
-$(addprefix uninstall-$(allbins)): uninstall-%:
+$(addprefix uninstall-,$(allbins)): uninstall-%:
 	rm -f $(BINDIR)/$*
