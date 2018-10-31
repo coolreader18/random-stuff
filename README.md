@@ -6,7 +6,7 @@ A collection of stuff to play around with.
 
 1. Clone the repository: `git clone https://github.com/coolreader18/random-stuff/`
 1. Ensure necessary dependencies are installed: go, GNU make. For some platforms, you can run `./setup.sh`.
-1. Run `make install` to install, or just `make` to build to the `build` directory.
+1. Run `sudo make install` to install, or just `make` to build to the `build` directory.
 
 ## License
 This project is licensed under the MIT license; see the [LICENSE](LICENSE) file for more details. Projects
