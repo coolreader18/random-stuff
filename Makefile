@@ -27,14 +27,19 @@ update-godeps: .rm-godeps .godeps
 
 kahootbins = $(patsubst kahoot-hack/%,%,$(wildcard kahoot-hack/kahoot-*))
 
-scriptsbins = $(patsubst scripts/%,%,$(wildcard scripts/*))
+scriptsbins = $(patsubst scripts/%.sh,%,$(wildcard scripts/*))
 
 include generic.mk
 
 # recipes
 
-$(scriptsbuilds): $(OUTDIR)/%: scripts/%
-	cp $< $@
+.SECONDEXPANSION:
+$(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
+		$$(addprefix $$(OUTDIR)/,$$(shell ./get-deps.sh $$*))
+	echo '#!/usr/bin/env bash' > $@
+	echo 'PATH="$$PATH":"$(shell realpath $(OUTDIR))"' >> $@
+	cat $< >> $@
+	chmod +x $@
 
 $(kahootbuilds): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go) .godeps
 	go build -o $@ kahoot-hack/$*/main.go
