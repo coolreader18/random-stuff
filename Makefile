@@ -37,7 +37,7 @@ include generic.mk
 $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
 		$$(addprefix $$(OUTDIR)/,$$(shell ./get-deps.sh $$*))
 	echo '#!/usr/bin/env bash' > $@
-	echo 'PATH="$$PATH":"$(shell realpath $(OUTDIR))"' >> $@
+	echo 'PATH="$$PATH":"$(realpath $(OUTDIR))"' >> $@
 	cat $< >> $@
 	chmod +x $@
 
