@@ -33,9 +33,11 @@ include generic.mk
 
 # recipes
 
+get_deps = deps="$$$$(bash scripts/"$$*".sh --deps 2>/dev/null)" && echo $$$$deps
+
 .SECONDEXPANSION:
 $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
-		$$(addprefix $$(OUTDIR)/,$$(shell ./get-deps.sh $$*))
+		$$(addprefix $$(OUTDIR)/,$$(shell $(get_deps)))
 	echo '#!/usr/bin/env bash' > $@
 	echo 'PATH="$$PATH":"$(realpath $(OUTDIR))"' >> $@
 	cat $< >> $@
