@@ -40,6 +40,7 @@ $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
 		$$(addprefix $$(OUTDIR)/,$$(shell $(get_deps)))
 	echo '#!/usr/bin/env bash' > $@
 	echo 'PATH="$$PATH":"$(realpath $(OUTDIR))"' >> $@
+	echo 'RS_DIR="$(realpath .)"' >> $@
 	cat $< >> $@
 	chmod +x $@
 
