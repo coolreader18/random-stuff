@@ -13,8 +13,10 @@ $(foreach target,$(targets),$(eval $(call __defvars,$(target))))
 
 install: $(addprefix install-,$(targets))
 
-$(addprefix install-,$(allbins)): install-%: $(OUTDIR)/%
+$(addprefix $(BINDIR)/,$(allbins)): $(BINDIR)/%: $(OUTDIR)/%
 	install -m 557 $< $(BINDIR)
+
+$(addprefix install-,$(allbins)): install-%: $(BINDIR)/%
 
 uninstall: $(addprefix uninstall-,$(targets))
 
