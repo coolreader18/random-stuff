@@ -1,5 +1,5 @@
-OUTDIR = build
-BINDIR = /usr/bin
+OUTDIR ?= build
+BINDIR ?= /usr/bin
 
 targets = kahoot scripts
 
