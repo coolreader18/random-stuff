@@ -1,12 +1,27 @@
-show_help() {
-  echo 'Usage: names (flood|rand) <game pin> <name list>'
+errecho() {
+  >&2 echo $@
 }
+
+show_help() {
+  "${1:-echo}" 'Usage: names (flood|rand) <game pin> <name list>'
+}
+
 case $1 in
   --deps)
     echo "kahoot-flood kahoot-rand"
   ;;
+  --lists)
+    ls "$SRC_DIR"/kahoot-names
+  ;;
   flood|rand)
-    list="$RS_DIR/kahoot-names/$3"
+    case "$#" in
+      1|2)
+        errecho "Missing parameters"
+        show_help errecho
+        exit 1
+      ;;
+    esac
+    list="$SRC_DIR/kahoot-names/$3"
     if [[ ! -f $list ]]; then
       echo "Names list '$3' not found"
       exit 1
@@ -17,12 +32,12 @@ case $1 in
     show_help
   ;;
   "")
-    show_help
+    show_help errecho
     exit 1
   ;;
   *)
-    echo "Invalid option"
-    show_help
+    errecho "Invalid option"
+    show_help errecho
     exit 1
   ;;
 esac
