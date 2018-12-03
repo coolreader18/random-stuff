@@ -22,3 +22,5 @@ uninstall: $(addprefix uninstall-,$(targets))
 
 $(addprefix uninstall-,$(allbins)): uninstall-%:
 	rm -f $(BINDIR)/$*
+
+$(allbins): %: $(OUTDIR)/%
