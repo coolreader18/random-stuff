@@ -5,24 +5,6 @@ targets = kahoot scripts
 
 all: $(targets)
 
-# Go stuff
-
-.PHONY: .rm-godeps update-godeps
-
-export GODIR ?= ~/go
-
-clean: .rm-godeps
-	rm -f $(allbuilds)
-
-.godeps:
-	go get -v -d ./...
-	touch .godeps
-
-.rm-godeps:
-	rm -f .godeps
-
-update-godeps: .rm-godeps .godeps
-
 # bin definitions
 
 kahootbins = $(patsubst kahoot-hack/%,%,$(wildcard kahoot-hack/kahoot-*))
@@ -45,5 +27,6 @@ $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
 	cat $< >> $@
 	chmod +x $@
 
-$(kahootbuilds): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go) .godeps
+$(kahootbuilds): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go)
+	@go get -d ./kahoot-hack/$*/...
 	go build -o $@ kahoot-hack/$*/main.go
