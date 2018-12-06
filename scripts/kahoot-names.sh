@@ -21,7 +21,8 @@ case $1 in
         exit 1
       ;;
     esac
-    list="$SRC_DIR/kahoot-names/$3"
+    namesdir=${KAHOOT_NAMES_DIR:-~/.kh-names}
+    list="$namesdir/$3"
     if [[ ! -f $list ]]; then
       echo "Names list '$3' not found"
       exit 1

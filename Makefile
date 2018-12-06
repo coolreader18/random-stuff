@@ -34,3 +34,19 @@ $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
 $(kahootbuilds): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go)
 	@go get -d ./kahoot-hack/$*/...
 	go build -o $@ kahoot-hack/$*/main.go
+
+# kahoot names stuff
+
+KAHOOT_NAMES_DIR ?= $(shell echo ~/.kh-names)
+
+install: install-kh-names
+
+khnames = $(patsubst kahoot-names/%,%,$(wildcard kahoot-names/*))
+
+khnames_in_dir = $(addprefix $(KAHOOT_NAMES_DIR)/,$(khnames))
+
+install-kh-names: $(khnames_in_dir)
+
+$(khnames_in_dir): $(KAHOOT_NAMES_DIR)/%: kahoot-names/%
+	@mkdir -p $(KH_NAMES_DIR)
+	cp $< $(KH_NAMES_DIR)
