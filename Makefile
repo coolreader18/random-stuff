@@ -1,9 +1,13 @@
+PREFIX ?= /usr
 OUTDIR ?= build
-BINDIR ?= /usr/bin
+BINDIR ?= $(PREFIX)/bin
 
 targets = kahoot scripts
 
 all: $(targets)
+
+clean:
+	rm -f $(allbuilds)
 
 # bin definitions
 
@@ -15,7 +19,7 @@ include generic.mk
 
 # recipes
 
-get_deps = deps="$$$$(bash scripts/"$$*".sh --deps 2>/dev/null)" && echo $$$$deps
+get_deps = deps="$$$$(BINS="$$(allbins)" bash scripts/"$$*".sh --deps 2>/dev/null)" && echo $$$$deps
 
 .SECONDEXPANSION:
 $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
