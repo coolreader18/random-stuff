@@ -1,16 +1,29 @@
+err() {
+  >&2 $@
+}
+
+get_kahoots() {
+	grep ^kahoot-
+}
+
+show_usages() {
+	for exe in $(compgen -c | get_kahoots); do
+	  $exe 2>&1 >/dev/null | \
+      sed 's/Usage://;s/^[ \t]*//;s/^/kh /'
+	done
+}
+
 case  $1 in
   --deps)
-    for dep in $BINS; do
-      if [[ $dep = kahoot-* ]]; then
-        echo $dep
-      fi
-    done
+    echo $BINS | tr ' ' '\n' | get_kahoots
+  ;;
+  --help)
+    echo Usage:
+    show_usages
   ;;
   "")
-    echo Options:
-    for exe in $(compgen -c | grep ^kahoot-); do
-      $exe 2>&1 >/dev/null | sed 's/^[ \t]*//;s/^Usage: //'
-    done
+    err echo Usage:
+    err show_usages
     exit 1
   ;;
   *)

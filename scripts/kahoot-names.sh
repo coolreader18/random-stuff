@@ -1,9 +1,9 @@
-errecho() {
-  >&2 echo $@
+err() {
+  >&2 $@
 }
 
 show_help() {
-  "${1:-echo}" 'Usage: names (flood|rand) <game pin> <name list>'
+  echo 'Usage: names (flood|rand) <game pin> <name list>'
 }
 
 case $1 in
@@ -16,8 +16,8 @@ case $1 in
   flood|rand)
     case "$#" in
       1|2)
-        errecho "Missing parameters"
-        show_help errecho
+        err echo "Missing parameters"
+        err show_help
         exit 1
       ;;
     esac
@@ -32,12 +32,12 @@ case $1 in
     show_help
   ;;
   "")
-    show_help errecho
+    err show_help
     exit 1
   ;;
   *)
-    errecho "Invalid option"
-    show_help errecho
+    err echo "Invalid option"
+    err show_help err
     exit 1
   ;;
 esac
