@@ -15,7 +15,7 @@ if [[ -z ${R_S_ENV+x} ]]; then
   fi
 fi
 
-if [[ $(find kahoot-hack -maxdepth 0 -empty -exec echo {} is empty. \;) ]]; then
+if [[ $(find kahoot-hack -type f -exec echo good \;) ]]; then
   git submodule init
   git submodule update
 fi
