@@ -7,8 +7,8 @@ get_kahoots() {
 }
 
 show_usages() {
-	for exe in $(compgen -c | get_kahoots); do
-	  $exe 2>&1 >/dev/null | \
+	for exe in $(compgen -c kahoot- | sort | uniq); do
+	  $exe 2>&1 | \
       sed 's/Usage://;s/^[ \t]*//;s/^/kh /'
 	done
 }
