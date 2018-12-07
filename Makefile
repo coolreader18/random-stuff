@@ -37,7 +37,9 @@ $(kahootbuilds): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go)
 
 # kahoot names stuff
 
-KAHOOT_NAMES_DIR ?= $(shell echo ~/.kh-names)
+homedir = $(shell [ "$$SUDOUSER" ] && echo /home/"$$SUDOUSER" || echo ~)
+
+KAHOOT_NAMES_DIR ?= $(homedir)/.kh-names
 
 install: install-kh-names
 
@@ -50,3 +52,13 @@ install-kh-names: $(khnames_in_dir)
 $(khnames_in_dir): $(KAHOOT_NAMES_DIR)/%: kahoot-names/%
 	@mkdir -p $(KH_NAMES_DIR)
 	cp $< $(KH_NAMES_DIR)
+
+# completions stuff
+
+install: install-bash-completions
+
+install-bash-completions: $(homedir)/.bash_completion/random-stuff
+
+$(homedir)/.bash_completion/random-stuff: random-stuff.bash-completion
+	@mkdir -p $(homedir)/.bash_completion
+	cp $< $@
