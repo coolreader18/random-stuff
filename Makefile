@@ -55,6 +55,10 @@ $(khnames_in_dir): $(KAHOOT_NAMES_DIR)/%: kahoot-names/%
 
 # completions stuff
 
+BASH_COMPLETIONS_DIR = $(shell pkg-config bash-completion --variable=completionsdir)
+
+completions = $(wildcard bash-completions/*.bash-completion)
+
 install: install-bash-completions
 
 install-bash-completions: $(homedir)/.bash_completion/random-stuff

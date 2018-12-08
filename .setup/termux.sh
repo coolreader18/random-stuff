@@ -1,1 +1,1 @@
-apt install golang
+apt install golang pkg-config

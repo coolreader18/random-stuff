@@ -1,11 +1,11 @@
-apt install make bison
+apt install make bison pkg-config
 
 curl -sSL https://github.com/moovweb/gvm/raw/master/binscripts/gvm-installer | bash
 
 . ~/.gvm/scripts/gvm
 
 if [[ ! $GO_VERSION ]]; then
-	GO_VERSION=go1.10
+  GO_VERSION=go1.10
 fi
 
 gvm install "$GO_VERSION" -B
