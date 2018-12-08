@@ -13,4 +13,4 @@ _kahoot_names() {
 	esac
 }
 
-complete -F _kahoot_names kahoot_names
+complete -F _kahoot_names kahoot-names

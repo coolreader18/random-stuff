@@ -55,15 +55,29 @@ $(khnames_in_dir): $(KAHOOT_NAMES_DIR)/%: kahoot-names/%
 
 # completions stuff
 
-BASH_COMPLETIONS_DIR = $(shell pkg-config bash-completion --variable=completionsdir)
+BASH_COMPLETIONS_DIR = \
+  $(shell command -v pkg-config 2>&1 >/dev/null \
+	  && pkg-config bash-completion --variable=completionsdir \
+		|| echo 'install_pkg-config_and_bash-completion_or_set_BASH_COMPLETIONS_DIR' )
 
-completions = $(patsubst bash-completions/%,%,$(wildcard bash-completions/*))
 
-install: install-bash-completions
+bash_completions = $(patsubst bash-completions/%.sh,%,$(wildcard bash-completions/*))
 
 .PHONY: install-bash-completions
-install-bash-completions: $(addprefix $(BASH_COMPLETIONS_DIR)/,$(completions))
+install-bash-completions: $(addprefix $(BASH_COMPLETIONS_DIR)/,$(bash_completions))
 
-$(addprefix $(BASH_COMPLETIONS_DIR)/,$(completions)): $(BASH_COMPLETIONS_DIR)/%: bash-completions/%
+$(addprefix $(BASH_COMPLETIONS_DIR)/,$(bash_completions)): \
+    $(BASH_COMPLETIONS_DIR)/%: bash-completions/%.sh
 	@mkdir -p $(BASH_COMPLETIONS_DIR)
-	cp -a $< $(BASH_COMPLETIONS_DIR)
+	if [ -L $< ]; then ln -s $(patsubst %.sh,%,$(shell readlink $<)) $@; else cp $< $@; fi
+
+ZSH_FUNCTIONS_DIR = $(PREFIX)/local/share/zsh/site-functions
+
+zsh_functions = $(patsubst zsh-functions/%.sh,%,$(wildcard zsh-functions/*))
+
+install-zsh-functions: $(addprefix $(ZSH_FUNCTIONS_DIR)/,$(zsh_functions))
+
+$(addprefix $(ZSH_FUNCTIONS_DIR)/,$(zsh_functions)): \
+    $(ZSH_FUNCTIONS_DIR)/%: zsh-functions/%.sh
+	@mkdir -p $(ZSH_FUNCTIONS_DIR)
+	cp $< $@
