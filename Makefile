@@ -50,19 +50,20 @@ khnames_in_dir = $(addprefix $(KAHOOT_NAMES_DIR)/,$(khnames))
 install-kh-names: $(khnames_in_dir)
 
 $(khnames_in_dir): $(KAHOOT_NAMES_DIR)/%: kahoot-names/%
-	@mkdir -p $(KH_NAMES_DIR)
-	cp $< $(KH_NAMES_DIR)
+	@mkdir -p $(KAHOOT_NAMES_DIR)
+	cp $< $(KAHOOT_NAMES_DIR)
 
 # completions stuff
 
 BASH_COMPLETIONS_DIR = $(shell pkg-config bash-completion --variable=completionsdir)
 
-completions = $(wildcard bash-completions/*.bash-completion)
+completions = $(patsubst bash-completions/%,%,$(wildcard bash-completions/*))
 
 install: install-bash-completions
 
-install-bash-completions: $(homedir)/.bash_completion/random-stuff
+.PHONY: install-bash-completions
+install-bash-completions: $(addprefix $(BASH_COMPLETIONS_DIR)/,$(completions))
 
-$(homedir)/.bash_completion/random-stuff: random-stuff.bash-completion
-	@mkdir -p $(homedir)/.bash_completion
-	cp $< $@
+$(addprefix $(BASH_COMPLETIONS_DIR)/,$(completions)): $(BASH_COMPLETIONS_DIR)/%: bash-completions/%
+	@mkdir -p $(BASH_COMPLETIONS_DIR)
+	cp -a $< $(BASH_COMPLETIONS_DIR)
