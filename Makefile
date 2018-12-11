@@ -33,7 +33,7 @@ $(scriptsbuilds): $(OUTDIR)/%: $(addsuffix .sh,scripts/%) \
 
 $(kahootbuilds): $(OUTDIR)/%: $(wildcard kahoot-hack/%/*.go)
 	@go get -d ./kahoot-hack/$*/...
-	go build -o $@ kahoot-hack/$*/main.go
+	go build -o $@ ./kahoot-hack/$*
 
 # kahoot names stuff
 
