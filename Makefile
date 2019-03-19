@@ -57,7 +57,7 @@ $(khnames_in_dir): $(KAHOOT_NAMES_DIR)/%: kahoot-names/%
 
 BASH_COMPLETIONS_DIR = \
   $(shell command -v pkg-config 2>&1 >/dev/null \
-	  && pkg-config bash-completion --variable=completionsdir \
+	  && pkg-config bash-completion --variable=completionsdir 2>/dev/null \
 		|| echo 'install_pkg-config_and_bash-completion_or_set_BASH_COMPLETIONS_DIR' )
 
 
